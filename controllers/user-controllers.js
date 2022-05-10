@@ -1,6 +1,7 @@
 const userService = require("../service/user-service");
 const { validationResult } = require("express-validator");
 const ApiError = require("../exceptions/api-error");
+const tokenService = require("../service/token-service");
 
 class UserController {
   async registration(req, res, next) {
@@ -64,6 +65,31 @@ class UserController {
         httpOnly: true,
       });
       return res.json(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+  async isauth(req, res, next) {
+    try {
+      const authorizationHeader = req.headers.authorization;
+      if (!authorizationHeader) {
+        return next(ApiError.UnauthorizedError());
+      }
+
+      const accessToken = authorizationHeader.split(" ")[1];
+      if (!accessToken) {
+        return next(ApiError.UnauthorizedError());
+      }
+
+      const userData = tokenService.validateAccessToken(accessToken);
+      if (!userData) {
+        return next(ApiError.UnauthorizedError());
+      }
+      return res.json({
+        email: userData.email,
+        id: userData.id,
+        isActivated: userData.isActivated,
+      });
     } catch (e) {
       next(e);
     }
