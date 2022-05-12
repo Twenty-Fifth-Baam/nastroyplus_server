@@ -32,7 +32,6 @@ class FavoriteService {
   }
 
   async deleteFromFavorite(userId, productId) {
-    console.log("dsfSDf", productId);
     if (!isvalidUUID(productId)) {
       throw ApiError.BadRequest(`Невалидный id товара!`);
     }
