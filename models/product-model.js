@@ -7,6 +7,10 @@ const Product = sequelize.define("product", {
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
+  image:{
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,

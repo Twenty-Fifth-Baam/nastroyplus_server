@@ -6,6 +6,8 @@ const sequelize = require("./db");
 const router = require("./router/index");
 const errorMiddleware = require("./middlewares/error-middleware");
 const models = require("./models/models");
+const path = require("path")
+const uploadRouter = require("./router/upload-router");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -18,6 +20,8 @@ app.use(
     origin: process.env.CLIENT_URL,
   })
 );
+app.use("/upload", uploadRouter);
+app.use("/images", express.static(path.join(__dirname + "/images")));
 app.use("/api", router);
 app.use(errorMiddleware);
 

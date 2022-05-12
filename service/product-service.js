@@ -3,7 +3,7 @@ const ApiError = require("../exceptions/api-error");
 const isvalidUUID = require("./uuid-service");
 
 class ProductService {
-  async createProduct(name, description, count, price, subcategoryId) {
+  async createProduct(name, description, count, price, subcategoryId, image) {
     const product = await Product.findOne({ where: { name: name } });
     if (product) {
       throw ApiError.BadRequest(`Данный товар уже существует!`);
@@ -24,6 +24,7 @@ class ProductService {
       count,
       price,
       subcategoryId,
+      image,
     });
     return newProduct;
   }
@@ -39,7 +40,15 @@ class ProductService {
     return product;
   }
 
-  async updateProduct(id, name, description, count, price, subcategoryId) {
+  async updateProduct(
+    id,
+    name,
+    description,
+    count,
+    price,
+    subcategoryId,
+    image
+  ) {
     if (!isvalidUUID(id)) {
       throw ApiError.BadRequest(`Невалидный id товара!`);
     }
@@ -65,6 +74,7 @@ class ProductService {
         count: count,
         price: price,
         subcategoryId: subcategoryId,
+        image: image,
       },
       {
         where: {
@@ -82,14 +92,14 @@ class ProductService {
       where: { id: id },
       include: { model: Attribute, as: "attributes", required: false },
     });
-    if(!product){
+    if (!product) {
       throw ApiError.NotFound(`По вашему запросу ничего не найдено`);
     }
     return product;
   }
   async getProductsBySubcategory(subcategoryId, limit, page) {
     let offset;
-    if(page && limit){
+    if (page && limit) {
       offset = page * limit - limit;
     }
     if (!isvalidUUID(subcategoryId)) {
@@ -104,8 +114,7 @@ class ProductService {
     const count = await Product.count({
       where: {
         subcategoryId: subcategoryId,
-      }
-
+      },
     });
     const products = await Product.findAll({
       where: {
@@ -114,20 +123,20 @@ class ProductService {
       limit,
       offset,
     });
-    return {products, count};
+    return { products, count };
   }
 
   async getProductsAll(limit, page) {
     let offset;
-    if(page && limit){
+    if (page && limit) {
       offset = page * limit - limit;
     }
     const count = await Product.count();
-    const products = await Product.findAll( {
+    const products = await Product.findAll({
       limit,
       offset,
     });
-    return {products, count};
+    return { products, count };
   }
 }
 
