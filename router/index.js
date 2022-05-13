@@ -4,6 +4,7 @@ const subcategoryRouter = require("./subcategory-router");
 const productRouter = require("./product-router");
 const attributeRouter = require("./attribute-router");
 const favoriteRouter = require("./favorite-router");
+const basketRouter = require("./basket-router");
 
 const Router = require("express").Router;
 const router = new Router();
@@ -15,4 +16,6 @@ router.use("/subcategory", subcategoryRouter);
 router.use("/product", productRouter);
 router.use("/attribute", attributeRouter);
 router.use("/favorite", favoriteRouter);
+router.use("/basket", basketRouter);
+
 module.exports = router;

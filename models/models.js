@@ -7,6 +7,7 @@ const {
   Attribute,
 } = require("./product-model");
 const { Favorite } = require("./favorite-model");
+const { Basket } = require("./basket-model");
 
 User.hasOne(Token);
 Token.belongsTo(User);
@@ -25,3 +26,10 @@ Favorite.belongsTo(User);
 
 Product.hasMany(Favorite);
 Favorite.belongsTo(Product);
+
+
+User.hasMany(Basket);
+Basket.belongsTo(User);
+
+Product.hasMany(Basket);
+Basket.belongsTo(Product);
