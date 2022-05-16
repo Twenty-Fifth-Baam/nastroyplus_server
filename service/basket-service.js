@@ -42,9 +42,9 @@ class FavoriteService {
     return baskets;
   }
 
-  async deleteFromBasket(userId, productId) {
-    if (!isvalidUUID(productId)) {
-      throw ApiError.BadRequest(`Невалидный id товара!`);
+  async deleteFromBasket(userId, basketId) {
+    if (!isvalidUUID(basketId)) {
+      throw ApiError.BadRequest(`Невалидный id корзины!`);
     }
     const basket = await Basket.destroy({
       where: {
@@ -53,7 +53,7 @@ class FavoriteService {
             userId: userId,
           },
           {
-            productId: productId,
+            id: basketId,
           },
         ],
       },
@@ -80,9 +80,9 @@ class FavoriteService {
     return basket ? true : false;
   }
 
-  async updateBasketCount(userId, productId, count) {
-    if (!isvalidUUID(productId)) {
-      throw ApiError.BadRequest(`Невалидный id товара!`);
+  async updateBasketCount(userId, basketId, count) {
+    if (!isvalidUUID(basketId)) {
+      throw ApiError.BadRequest(`Невалидный id корзины!`);
     }
     const basket = await Basket.findOne({
       where: {
@@ -91,7 +91,7 @@ class FavoriteService {
             userId: userId,
           },
           {
-            productId: productId,
+            id: basketId,
           },
         ],
       },
@@ -102,6 +102,9 @@ class FavoriteService {
     }
     if (count > basket.product.count) {
       throw ApiError.BadRequest(`Превышен лимит количества данного товара!`);
+    }
+    if (count < 1) {
+      throw ApiError.BadRequest(`Недопустимое значение колличества товара`);
     }
 
     const updateCount = await Basket.update(
@@ -115,7 +118,7 @@ class FavoriteService {
               userId: userId,
             },
             {
-              productId: productId,
+              id: basketId,
             },
           ],
         },

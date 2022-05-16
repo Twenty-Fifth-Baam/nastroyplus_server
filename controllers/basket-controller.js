@@ -26,8 +26,8 @@ class BasketController {
   async deleteFromBasket(req, res, next) {
     try {
       const user = req.user;
-      const productId = req.body.productId;
-      const basket = await basketService.deleteFromBasket(user.id, productId);
+      const basketId = req.body.basketId;
+      const basket = await basketService.deleteFromBasket(user.id, basketId);
       return res.json(basket);
     } catch (e) {
       next(e);
@@ -47,10 +47,10 @@ class BasketController {
   async updateBasketCount(req, res, next) {
     try {
       const user = req.user;
-      const { productId, count } = req.body;
+      const { basketId, count } = req.body.data;
       const basket = await basketService.updateBasketCount(
         user.id,
-        productId,
+        basketId,
         count
       );
       return res.json(basket);
