@@ -1,18 +1,30 @@
 const { Product, Attribute } = require("../models/product-model");
 const ApiError = require("../exceptions/api-error");
 const isvalidUUID = require("./uuid-service");
+const { Op } = require("sequelize");
 
 class AttributeService {
   async createAttribute(name, value, productId) {
     if (!isvalidUUID(productId)) {
       throw ApiError.BadRequest(`Невалидный id продукта!`);
     }
-    const product = await Product.findOne({ where: { id: productId } });
+    const product = await Product.findOne({
+      where: { id: productId },
+    });
     if (!product) {
       throw ApiError.BadRequest(`Данного товара не существует!`);
     }
     const attribute = await Attribute.findOne({
-      where: { name: name },
+      where: {
+        [Op.and]: [
+          {
+            name: name,
+          },
+          {
+            productId: productId,
+          },
+        ],
+      },
     });
 
     if (attribute) {
@@ -56,7 +68,7 @@ class AttributeService {
       throw ApiError.BadRequest(`Данного товара не существует!`);
     }
 
-    const updateAttribute= await Attribute.update(
+    const updateAttribute = await Attribute.update(
       {
         name: name,
         value: value,
@@ -70,7 +82,7 @@ class AttributeService {
     );
     return updateAttribute;
   }
-  
+
   async getAttributes(subcategoryId) {
     if (!isvalidUUID(subcategoryId)) {
       throw ApiError.BadRequest(`Невалидный id подкатегории!`);
