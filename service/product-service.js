@@ -121,7 +121,7 @@ class ProductService {
       where: {
         subcategoryId: subcategoryId,
       },
-      order: filter ? [filter] : [],
+      order: filter ? filter.split(",") : [],
       limit,
       offset,
     });
