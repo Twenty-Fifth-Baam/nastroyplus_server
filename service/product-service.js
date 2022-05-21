@@ -116,13 +116,13 @@ class ProductService {
         subcategoryId: subcategoryId,
       },
     });
-
+    const splited = filter.split(',');
+    const trimmed = [splited[0].trim(), splited[1].trim()]
     const products = await Product.findAll({
       where: {
         subcategoryId: subcategoryId,
       },
-      order: filter ? [...filter.split(",")] : [],
-      limit,
+      order: [trimmed],
       offset,
     });
     return { products, count };

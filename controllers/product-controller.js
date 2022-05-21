@@ -53,6 +53,7 @@ class ProductController {
       const subcategoryId = req.query.subcategoryId;
       const { _limit, _page } = req.query;
       const filter = req.query.filter
+      console.log("sdgADSFAEDFSADFfszdfg",filter)
       if (subcategoryId) {
         const product = await productService.getProductsBySubcategory(
           subcategoryId,
