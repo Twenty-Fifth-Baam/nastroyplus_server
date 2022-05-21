@@ -97,7 +97,7 @@ class ProductService {
     }
     return product;
   }
-  async getProductsBySubcategory(subcategoryId, limit, page) {
+  async getProductsBySubcategory(subcategoryId, limit, page, filter) {
     let offset;
     if (page && limit) {
       offset = page * limit - limit;
@@ -116,10 +116,12 @@ class ProductService {
         subcategoryId: subcategoryId,
       },
     });
+
     const products = await Product.findAll({
       where: {
         subcategoryId: subcategoryId,
       },
+      order: filter ? [filter] : [],
       limit,
       offset,
     });
