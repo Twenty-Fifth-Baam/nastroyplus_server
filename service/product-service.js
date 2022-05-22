@@ -123,6 +123,7 @@ class ProductService {
       order: filter
         ? [[filter.split(",")[0].trim(), filter.split(",")[1].trim()]]
         : [],
+      limit,
       offset,
     });
     return { products, count };
