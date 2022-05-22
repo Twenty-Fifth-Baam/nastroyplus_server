@@ -121,7 +121,7 @@ class ProductService {
         subcategoryId: subcategoryId,
       },
       order: filter
-        ? [filter.split(",")[0].trim(), filter.split(",")[1].trim()]
+        ? [[filter.split(",")[0].trim(), filter.split(",")[1].trim()]]
         : [],
       offset,
     });
