@@ -32,7 +32,8 @@ class ProductController {
 
   async updateProduct(req, res, next) {
     try {
-      const { id, name, description, count, price, subcategoryId, image} = req.body;
+      const { id, name, description, count, price, subcategoryId, image } =
+        req.body;
       const product = await productService.updateProduct(
         id,
         name,
@@ -40,7 +41,7 @@ class ProductController {
         count,
         price,
         subcategoryId,
-        image,
+        image
       );
       return res.json(product);
     } catch (e) {
@@ -51,15 +52,14 @@ class ProductController {
   async getProducts(req, res, next) {
     try {
       const subcategoryId = req.query.subcategoryId;
-      const { _limit, _page } = req.query;
-      const filter = req.query.filter
-      console.log("sdgADSFAEDFSADFfszdfg",filter)
+      const { _limit, _page, sort, order } = req.query;
       if (subcategoryId) {
         const product = await productService.getProductsBySubcategory(
           subcategoryId,
           _limit,
           _page,
-          filter
+          sort,
+          order
         );
         return res.json(product);
       }

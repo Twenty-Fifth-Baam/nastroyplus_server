@@ -97,7 +97,7 @@ class ProductService {
     }
     return product;
   }
-  async getProductsBySubcategory(subcategoryId, limit, page, filter) {
+  async getProductsBySubcategory(subcategoryId, limit, page, sort, order) {
     let offset;
     if (page && limit) {
       offset = page * limit - limit;
@@ -120,9 +120,7 @@ class ProductService {
       where: {
         subcategoryId: subcategoryId,
       },
-      order: filter
-        ? [[filter.split(",")[0].trim(), filter.split(",")[1].trim()]]
-        : [],
+      order: sort && order ? [[sort, order]] : [],
       limit,
       offset,
     });
