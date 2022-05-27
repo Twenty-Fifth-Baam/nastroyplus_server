@@ -8,6 +8,7 @@ const {
 } = require("./product-model");
 const { Favorite } = require("./favorite-model");
 const { Basket } = require("./basket-model");
+const { Order, OrderProduct } = require("./order-model");
 
 User.hasOne(Token);
 Token.belongsTo(User);
@@ -33,3 +34,12 @@ Basket.belongsTo(User);
 
 Product.hasMany(Basket);
 Basket.belongsTo(Product);
+
+User.hasMany(Order);
+Order.belongsTo(User);
+
+Product.hasMany(OrderProduct);
+OrderProduct.belongsTo(Product);
+
+Order.hasMany(OrderProduct);
+OrderProduct.belongsTo(Order);

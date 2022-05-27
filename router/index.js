@@ -5,6 +5,8 @@ const productRouter = require("./product-router");
 const attributeRouter = require("./attribute-router");
 const favoriteRouter = require("./favorite-router");
 const basketRouter = require("./basket-router");
+const orderRouter = require("./order-router");
+const adminRouter = require("./admin-router");
 
 const Router = require("express").Router;
 const router = new Router();
@@ -17,5 +19,7 @@ router.use("/product", productRouter);
 router.use("/attribute", attributeRouter);
 router.use("/favorite", favoriteRouter);
 router.use("/basket", basketRouter);
+router.use("/order", orderRouter);
+router.use("/admin", adminRouter);
 
 module.exports = router;
