@@ -12,9 +12,9 @@ const Order = sequelize.define("order", {
     allowNull: false,
   },
   status: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: false,
+    defaultValue: "В обработке",
   },
 });
 

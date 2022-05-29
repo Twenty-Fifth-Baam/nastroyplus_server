@@ -4,7 +4,6 @@ const FavoriteController = require("../controllers/favorite-controller");
 const authMiddleware = require("../middlewares/auth-middleware");
 
 router.post("/", authMiddleware, FavoriteController.addToFavorite);
-
 router.delete("/", authMiddleware, FavoriteController.deleteFromFavorite);
 router.get("/", authMiddleware, FavoriteController.getFavorites);
 router.get("/isfavorite/:productId", authMiddleware, FavoriteController.isFavorite);
