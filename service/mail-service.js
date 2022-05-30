@@ -30,11 +30,11 @@ class MailService {
         })
     }
 
-    async sendOrderMessage(to, title, text) {
+    async sendOrderMessage(to, title, text, subject) {
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
-            subject: `Заказ номер: ${order.id} в интернет магазине` + process.env.API_URL,
+            subject: subject,
             text: '',
             html:
                 `
