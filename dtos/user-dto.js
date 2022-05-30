@@ -3,8 +3,8 @@ module.exports = class UserDto {
     id;
     role;
     constructor(model) {
-        this.email = model.email;
+        // this.email = model.email;
         this.id = model.id;
-        this.role = model.role;
+        // this.role = model.role;
     }
 }
