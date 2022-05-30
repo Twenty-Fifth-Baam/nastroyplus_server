@@ -29,6 +29,22 @@ class MailService {
                 `
         })
     }
+
+    async sendOrderMessage(to, title, text) {
+        await this.transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to,
+            subject: `Заказ номер: ${order.id} в интернет магазине` + process.env.API_URL,
+            text: '',
+            html:
+                `
+                    <div>
+                        <h1>${title}</h1>
+                        <span>${text}</span>
+                    </div>
+                `
+        })
+    }
 }
 
 module.exports = new MailService();

@@ -5,7 +5,7 @@ class OrderController {
   async createOrder(req, res, next) {
     try {
       const user = req.user;
-      const order = await orderService.createOrder(user.id);
+      const order = await orderService.createOrder(user);
       return res.json(order);
     } catch (e) {
       next(e);
