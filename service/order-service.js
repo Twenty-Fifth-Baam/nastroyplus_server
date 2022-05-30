@@ -42,7 +42,7 @@ class OrderService {
 
         const title = `Заказ номер: ${order.id} в интернет магазине` + process.env.CLIENT_URL;
         const text = `Вы оформили заказ на сумму: ${order.totalPrice}. Статус заказа: ${order.status}`;
-        const subject = `nastroyplus` + process.env.API_URL
+        const subject = `nastroyplus заказ`
 
         await mailService.sendOrderMessage(
             user.email,
