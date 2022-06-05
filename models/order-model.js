@@ -19,6 +19,10 @@ const Order = sequelize.define("order", {
     address: {
         type: DataTypes.TEXT,
         allowNull: false,
+    },
+    phone: {
+        type: DataTypes.TEXT,
+        allowNull: false,
     }
 });
 

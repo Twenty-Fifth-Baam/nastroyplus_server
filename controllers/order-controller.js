@@ -6,7 +6,8 @@ class OrderController {
         try {
             const user = req.user;
             const {address} = req.body;
-            const order = await orderService.createOrder(user, address);
+            const {phone} = req.body;
+            const order = await orderService.createOrder(user, address, phone);
             return res.json(order);
         } catch (e) {
             next(e);
