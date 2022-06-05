@@ -18,21 +18,13 @@ class UserService {
         //Хешируем пароль
         const hashPassword = await bcrypt.hash(password, 3);
 
-        //Генерируем активационную ссылку
-        const activationLink = uuid.v4(); // v34fa-asfasf-142saf-sa-asf
 
         //Создаем пользователя в базе
         const user = await UserModel.create({
             email,
             password: hashPassword,
-            activationLink,
         });
 
-        //Отправляем письмо с активацией на email
-        await mailService.sendActivationMail(
-            email,
-            `${process.env.API_URL}/api/user/activate/${activationLink}`
-        );
 
         //Получаем необходимые данные из модели
         const userDto = new UserDto(user); // id, email, isActivated
@@ -44,25 +36,6 @@ class UserService {
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         return {...tokens, user: userDto};
-    }
-
-    async activate(activationLink) {
-
-        const user = await UserModel.findOne({
-            where: {activationLink: activationLink},
-        });
-        if (!user) {
-            throw ApiError.BadRequest("Неккоректная ссылка активации");
-        }
-
-        await UserModel.update(
-            {isActivated: true},
-            {
-                where: {
-                    activationLink: activationLink,
-                },
-            }
-        );
     }
 
     async login(email, password) {

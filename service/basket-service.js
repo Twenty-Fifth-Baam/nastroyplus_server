@@ -5,7 +5,7 @@ const { Favorite } = require("../models/favorite-model");
 const { Op } = require("sequelize");
 const { Basket } = require("../models/basket-model");
 
-class FavoriteService {
+class BasketService {
   async addToBasket(userId, productId, count) {
     if (!isvalidUUID(productId)) {
       throw ApiError.BadRequest(`Невалидный id товара!`);
@@ -128,4 +128,4 @@ class FavoriteService {
   }
 }
 
-module.exports = new FavoriteService();
+module.exports = new BasketService();

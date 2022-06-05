@@ -6,7 +6,7 @@ const {Order, OrderProduct} = require("../models/order-model");
 const mailService = require("./mail-service");
 
 class OrderService {
-    async createOrder(user) {
+    async createOrder(user, address) {
         const baskets = await Basket.findAll({
             where: {
                 userId: user.id,
@@ -23,6 +23,7 @@ class OrderService {
         const order = await Order.create({
             userId: user.id,
             totalPrice: totalPrice,
+            address: address
         });
         const promises = baskets.map((basket) =>
             OrderProduct.create({

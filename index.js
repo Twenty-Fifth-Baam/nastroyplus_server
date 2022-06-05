@@ -15,10 +15,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  cors({
-    credentials: true,
-    origin: [process.env.CLIENT_URL, "http://localhost:3000"],
-  })
+    cors({
+        credentials: true,
+        origin: "http://localhost:3000"
+    })
 );
 app.use("/upload", uploadRouter);
 app.use("/images", express.static(path.join(__dirname + "/images")));
@@ -26,15 +26,15 @@ app.use("/api", router);
 app.use(errorMiddleware);
 
 const start = async () => {
-  try {
-    await sequelize.authenticate();
-    await sequelize.sync();
-    app.listen(PORT, () => {
-      console.log(`Server started on ${PORT} port`);
-    });
-  } catch (e) {
-    console.log(e);
-  }
+    try {
+        await sequelize.authenticate();
+        await sequelize.sync();
+        app.listen(PORT, () => {
+            console.log(`Server started on ${PORT} port`);
+        });
+    } catch (e) {
+        console.log(e);
+    }
 };
 
 start();

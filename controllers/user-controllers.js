@@ -46,28 +46,13 @@ class UserController {
         try {
             const {refreshToken} = req.cookies;
             const token = await userService.logout(refreshToken);
-            res.clearCookie("refreshToken", {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                sameSite: 'none',
-                secure: true
-            });
+            res.clearCookie("refreshToken");
             return res.json(token);
         } catch (e) {
             next(e);
         }
     }
 
-    async activate(req, res, next) {
-        console.log("jhhusfdgbhzjhsfgr");
-        try {
-            const activationLink = req.params.link;
-            await userService.activate(activationLink);
-            return res.redirect(process.env.CLIENT_URL);
-        } catch (e) {
-            next(e);
-        }
-    }
 
     async refresh(req, res, next) {
         try {
