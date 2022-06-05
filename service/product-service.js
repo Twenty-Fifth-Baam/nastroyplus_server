@@ -32,7 +32,7 @@ class ProductService {
                 Attribute.create({
                     productId: newProduct.id,
                     name: attribute.name,
-                    value: attribute.name,
+                    value: attribute.value,
                 })
             );
             const contents = await Promise.all(promises);
