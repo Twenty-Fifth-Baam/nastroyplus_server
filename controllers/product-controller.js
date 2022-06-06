@@ -81,6 +81,19 @@ class ProductController {
             next(e);
         }
     }
+    async searchProducts(req, res, next) {
+        try {
+            const {_limit, _page, searchText} = req.query;
+                const product = await productService.searchProducts(
+                    _limit,
+                    _page,
+                    searchText,
+                );
+                return res.json(product);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new ProductController();

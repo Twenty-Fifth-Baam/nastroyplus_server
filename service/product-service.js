@@ -2,6 +2,7 @@ const {Product, Subcategory, Attribute} = require("../models/product-model");
 const ApiError = require("../exceptions/api-error");
 const isvalidUUID = require("./uuid-service");
 const {OrderProduct} = require("../models/order-model");
+const { Op } = require("sequelize");
 
 class ProductService {
     async createProduct(name, description, count, price, subcategoryId, image, attributes) {
@@ -149,6 +150,29 @@ class ProductService {
         }
         const count = await Product.count();
         const products = await Product.findAll({
+            limit,
+            offset,
+        });
+        return {products, count};
+    }
+    async searchProducts(limit, page, searchTexct) {
+        let offset;
+        if (page && limit) {
+            offset = page * limit - limit;
+        }
+        const count = await Product.count({
+            where: {
+                name: {
+                    [Op.substring]: searchTexct
+                }
+            },
+        });
+        const products = await Product.findAll({
+            where: {
+                name: {
+                    [Op.substring]: searchTexct
+                }
+            },
             limit,
             offset,
         });
