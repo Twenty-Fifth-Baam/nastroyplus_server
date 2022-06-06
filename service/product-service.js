@@ -163,14 +163,14 @@ class ProductService {
         const count = await Product.count({
             where: {
                 name: {
-                    [Op.iLike]: searchTexct
+                    [Op.substring]: searchTexct
                 }
             },
         });
         const products = await Product.findAll({
             where: {
                 name: {
-                    [Op.iLike]: searchTexct
+                    [Op.substring]: searchTexct
                 }
             },
             limit,
