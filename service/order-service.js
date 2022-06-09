@@ -90,7 +90,7 @@ class OrderService {
         return orders;
     }
 
-    async changeOrderStatus(orderId) {
+    async changeOrderStatus(orderId, status) {
         if (!isvalidUUID(orderId)) {
             throw ApiError.BadRequest(`Невалидный id заказа!`);
         }
@@ -102,7 +102,7 @@ class OrderService {
         if (!order) {
             throw ApiError.BadRequest(`Заказа с таким id не существует!`);
         }
-        order.status = true;
+        order.status = status;
         await order.save();
         return order;
     }
