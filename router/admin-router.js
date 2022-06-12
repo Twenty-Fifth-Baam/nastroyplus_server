@@ -12,7 +12,7 @@ const SubcategoryController = require("../controllers/subcategory-controller");
 
 
 router.get('/order', authMiddleware, adminMiddleware, orderController.getAllOrders);
-router.put('/order/:orderId', authMiddleware, adminMiddleware, orderController.changeOrderStatus);
+router.put('/order/changestatus', authMiddleware, adminMiddleware, orderController.changeOrderStatus);
 router.get('/users', authMiddleware, adminMiddleware, UserController.getUsers);
 
 router.post("/product", authMiddleware, adminMiddleware, productController.createProduct);

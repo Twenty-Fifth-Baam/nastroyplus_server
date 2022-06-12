@@ -45,8 +45,9 @@ class OrderController {
 
     async changeOrderStatus(req, res, next) {
         try {
-            const {orderId} = req.params;
-            const {status} = req.params;
+            console.log("kkdzfj", req.params.orderId)
+            const {orderId} = req.query;
+            const {status} = req.query;
             const order = await orderService.changeOrderStatus(orderId, status);
             return res.json(order);
         } catch (e) {
