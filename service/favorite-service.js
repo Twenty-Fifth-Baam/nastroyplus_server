@@ -31,20 +31,13 @@ class FavoriteService {
     return favorite;
   }
 
-  async deleteFromFavorite(userId, productId) {
-    if (!isvalidUUID(productId)) {
-      throw ApiError.BadRequest(`Невалидный id товара!`);
+  async deleteFromFavorite(userId, favoriteId) {
+    if (!isvalidUUID(favoriteId)) {
+      throw ApiError.BadRequest(`Невалидный id избранного!`);
     }
     const favorite = await Favorite.destroy({
       where: {
-        [Op.and]: [
-          {
-            userId: userId,
-          },
-          {
-            productId: productId,
-          },
-        ],
+        id: favoriteId,
       },
     });
     return favorite;

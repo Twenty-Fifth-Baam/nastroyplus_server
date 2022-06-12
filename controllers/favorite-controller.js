@@ -16,10 +16,10 @@ class FavoriteController {
   async deleteFromFavorite(req, res, next) {
     try {
       const user = req.user;
-      const productId = req.body.productId
+      const favoriteId = req.body.favoriteId
       const favorite = await favoriteService.deleteFromFavorite(
         user.id,
-        productId
+        favoriteId
       );
       return res.json(favorite);
     } catch (e) {
