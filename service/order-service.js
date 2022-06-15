@@ -72,14 +72,23 @@ class OrderService {
         if (!isvalidUUID(orderId)) {
             throw ApiError.BadRequest(`Невалидный id заказа!`);
         }
+        const order = await Order.findOne({
+            where: {
+                id: orderId,
+            },
+        }); 
+        if(!order){
+            throw ApiError.BadRequest(`Заказа не существует!`);
+        }
         const orderData = await OrderProduct.findAll({
             where: {
                 orderId: orderId,
             },
             include: Product,
         });
+        const data = {...order.dataValues, products : [...orderData]}
 
-        return orderData;
+        return data;
     }
 
     async getAllOrders() {
