@@ -26,6 +26,7 @@ class OrderController {
 
     async getOrderData(req, res, next) {
         try {
+            console.log("sdfS", req.params.orderId )
             const {orderId} = req.params;
             const orderData = await orderService.getOrderData(orderId);
             return res.json(orderData);
